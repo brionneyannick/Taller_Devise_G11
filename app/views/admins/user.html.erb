@@ -1,0 +1,20 @@
+<h3>Administración de Usuarios</h3>
+
+<table class="table table-striped">
+  <tr>
+    <th>Nombre</th>
+    <th>ID</th>
+    <th>Acción</th>
+  </tr>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.id %></td>
+      <% if user.admin? %>
+        <td><%= link_to 'Quitar Administrador', make_user_path(valor: false, user: user.id), method: :post, class: "btn btn-info" %></td>
+      <% else %>
+        <td><%= link_to 'Hacer Administrador', make_admin_path(valor: true, user: user.id), method: :post, class: "btn btn-info" %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

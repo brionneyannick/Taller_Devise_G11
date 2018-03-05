@@ -1,8 +1,10 @@
 class HistoriesController < ApplicationController
   before_action :set_history, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: :index
 
   # GET /histories
   # GET /histories.json
+
   def index
     @histories = History.all
   end
@@ -19,12 +21,18 @@ class HistoriesController < ApplicationController
 
   # GET /histories/1/edit
   def edit
+    if current_user.id == @history.user_id or current_user.admin?
+
+    else
+      redirect_to history_path(@history), notice: 'Cannot edit a history that does not belong to you!'
+    end
   end
 
   # POST /histories
   # POST /histories.json
   def create
     @history = History.new(history_params)
+    @history.user = current_user
 
     respond_to do |format|
       if @history.save
@@ -40,24 +48,32 @@ class HistoriesController < ApplicationController
   # PATCH/PUT /histories/1
   # PATCH/PUT /histories/1.json
   def update
-    respond_to do |format|
-      if @history.update(history_params)
-        format.html { redirect_to @history, notice: 'History was successfully updated.' }
-        format.json { render :show, status: :ok, location: @history }
-      else
-        format.html { render :edit }
-        format.json { render json: @history.errors, status: :unprocessable_entity }
+    if @history.user_id == current_user.id or current_user.admin?
+      respond_to do |format|
+        if @history.update(history_params)
+          format.html { redirect_to @history, notice: 'History was successfully updated.' }
+          format.json { render :show, status: :ok, location: @history }
+        else
+          format.html { render :edit }
+          format.json { render json: @history.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      redirect_to histories_path, notice: 'This history does not belong to you!'
     end
   end
 
   # DELETE /histories/1
   # DELETE /histories/1.json
   def destroy
-    @history.destroy
-    respond_to do |format|
-      format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }
-      format.json { head :no_content }
+    if @history.user_id == current_user.id or current_user.admin?
+      @history.destroy
+      respond_to do |format|
+        format.html { redirect_to histories_url, notice: 'History was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      redirect_to histories_path, notice: 'This history does not belong to you!'
     end
   end
 
