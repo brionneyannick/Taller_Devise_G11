@@ -1,3 +1,7 @@
+#Repo en heroku
+#https://dashboard.heroku.com/apps/devise-yannick-g11
+
+
 # Taller DEVISE
 ## Autenticación con Devise
 
@@ -30,7 +34,7 @@ brew update
 brew install imagemagick
 ~~~
 
-EN **Ubuntu**: 
+EN **Ubuntu**:
 
 ~~~
 sudo apt-get update
@@ -46,7 +50,7 @@ Cuando ya  tengas instalado imageMagik, continua abriendo tu proyecto. Deberas e
 bundle install
 ~~~
 
-y luego corre una migración: 
+y luego corre una migración:
 
 ~~~
 Rails db:migrate
@@ -80,7 +84,7 @@ Pictory es una aplicación para que diversos usuarios guarden sus historias y pu
 	- Añadir los campos name y username a los formularios de devise.
 	- Agregar los campos nuevos a los strong paramas
 	> Revisar documentación de <a href="https://github.com/plataformatec/devise">devise</a>.
-	- Validar en modelo user el campo name como obligatorio, y el campo username como obligatorio y único. 
+	- Validar en modelo user el campo name como obligatorio, y el campo username como obligatorio y único.
 
 - Modificar el menú para que, cuando el usuario no se encuentre conectado, muestre los link de login y registro, y cuando se encuentre conectado, muestre los link de editar registro y cerrar sesión.
 
@@ -104,4 +108,3 @@ Pictory es una aplicación para que diversos usuarios guarden sus historias y pu
 
 - Dentro del panel de control de usuarios, añadir al formulario de user la opción para dar o quitar el privilegio de admin.
 	- Estas acciones solo deben estar disponibles para un usuario con el rol admin.
-
